@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:customControls="clr-namespace:Un2TrekApp.Controls"
+             xmlns:helpers="clr-namespace:Un2TrekApp.Helpers"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"             
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+			 xmlns:vm="clr-namespace:Un2TrekApp.ViewModels"
+			 x:Class="Un2TrekApp.Views.TrekiMapPage"
+			 x:DataType="vm:TrekiMapViewModel">
+
+    <Grid ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <skia:SKLottieView
+                Grid.Row="0" Grid.RowSpan="3"
+                Source="trekking.json"
+                IsVisible="{Binding IsBusy}"
+                RepeatCount="-1"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"></skia:SKLottieView>
+        <Map x:Name="MapView" 
+             Grid.Row="0" 
+             MapClicked="MapView_MapClicked"             
+             IsVisible="{Binding NotIsBusy}"                    
+             HorizontalOptions="FillAndExpand"  
+             VerticalOptions="FillAndExpand" >
+            <x:Arguments>
+                <MapSpan>
+                    <x:Arguments>
+                        <sensors:Location>
+                            <x:Arguments>
+                                <x:Double>40.416775</x:Double>
+                                <x:Double>-3.703790</x:Double>
+                            </x:Arguments>
+                        </sensors:Location>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </MapSpan>
+            </x:Arguments>
+        </Map>
+        <popup:SfPopup  AppearanceMode="OneButton"
+                            ShowFooter="true"
+                            ShowCloseButton="True"
+                            HeaderTitle="Capturar"
+                            AcceptButtonText="¡Lo tengo!"
+                            IsOpen="{Binding CanUserCaptureTreki}"
+                            AcceptCommand="{Binding CaptureTrekiCommand}">
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="5">
+                        <core:SfTextInputLayout Style="{StaticResource DefaultTextInputLayout}">
+                            <Label Text ="{Binding SelectedTreki.Title}">
+                            </Label>
+                        </core:SfTextInputLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+        </popup:SfPopup>
+        <popup:SfPopup  AppearanceMode="TwoButton"
+                            ShowFooter="true"
+                            ShowCloseButton="True"
+                            HeaderTitle="Modificar"
+                            AcceptButtonText="Modificar"
+                            DeclineButtonText="Eliminar"
+                            IsOpen="{Binding IsEditingTreki}"
+                            IsFullScreen="true"
+                            AcceptCommand="{Binding ModifyTrekiCommand}"
+                            DeclineCommand="{Binding RemoveTrekiCommand}">
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical" Margin="5">
+                        <core:SfTextInputLayout                       
+                            Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry  Placeholder="Título"                                                                          
+                                    Text ="{Binding SelectedTreki.Title}">
+                            </Entry>
+                        </core:SfTextInputLayout>
+                        <core:SfTextInputLayout                       
+                            Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry  Placeholder="Título" HeightRequest="60"                                                                          
+                                    Text ="{Binding SelectedTreki.Description}">
+                            </Entry>
+                        </core:SfTextInputLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+        </popup:SfPopup>
+        <popup:SfPopup  AppearanceMode="TwoButton"
+                            ShowFooter="true"
+                            ShowCloseButton="True"
+                            IsFullScreen="true"
+                            HeaderTitle="Crear"
+                            AcceptButtonText="Crear"
+                            DeclineButtonText="Cancelar"
+                            IsOpen="{Binding IsAddingTreki}"
+                            AcceptCommand="{Binding CreateTrekiCommand}"
+                            DeclineCommand="{Binding CancelCreatingTrekiCommand}">
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="5">
+                        <StackLayout Orientation="Vertical">
+                            <core:SfTextInputLayout                       
+                            Style="{StaticResource DefaultTextInputLayout}">
+                                <Entry  Placeholder="Título"                                                                          
+                                    Text ="{Binding SelectedLocationTitle}">
+                                </Entry>
+                            </core:SfTextInputLayout>
+                            <core:SfTextInputLayout                       
+                            Style="{StaticResource DefaultTextInputLayout}">
+                                <Entry  Placeholder="Título" HeightRequest="60"                                                                          
+                                    Text ="{Binding SelectedLocationDescription}">
+                                </Entry>
+                            </core:SfTextInputLayout>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Vertical">
+                                <Label>Longitud</Label>
+                                <Label Style="{StaticResource LabelPeque}" Text="{Binding SelectedLocation.Longitude}"></Label>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                                <Label>Latitud</Label>
+                                <Label Style="{StaticResource LabelPeque}" Text="{Binding SelectedLocation.Latitude}"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+        </popup:SfPopup>
+    </Grid>
+</ContentPage>

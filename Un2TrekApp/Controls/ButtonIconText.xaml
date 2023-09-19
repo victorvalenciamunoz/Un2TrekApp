@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Un2TrekApp.Controls.ButtonIconText">
+    <Border x:Name="mainBorder"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Primary}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="5,5,5,5"></RoundRectangle>
+        </Border.StrokeShape>
+        <HorizontalStackLayout>
+            <Label Style="{StaticResource DefaultLeadingIconWhite}" 
+                            x:Name="buttonLabel"
+                           VerticalOptions="Center"
+                           Padding="4,0,1,0"
+                           />
+            <Button Text="" x:Name="buttonText"
+                    BorderWidth="0"
+                    Clicked="buttonText_Clicked"
+                    BackgroundColor="Transparent"/>
+
+        </HorizontalStackLayout>
+    </Border>
+</ContentView>

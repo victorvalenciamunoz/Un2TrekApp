@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:Un2TrekApp.Controls"
+             xmlns:helpers="clr-namespace:Un2TrekApp.Helpers"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="Un2TrekApp.Views.RegisterPage"
+			 xmlns:vm="clr-namespace:Un2TrekApp.ViewModels"             
+             x:DataType="vm:RegisterViewModel"
+             Title="RegisterPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <core:SfBusyIndicator   
+                VerticalOptions="CenterAndExpand"
+                HeightRequest="80"
+                WidthRequest="80"
+                BackgroundColor="White"
+                Grid.Row="0"
+                ZIndex="1000"
+                IndicatorColor="{StaticResource Primary}"
+                IsVisible="{Binding IsBusy}"
+                IsRunning="True"
+                AnimationType="CircularMaterial">
+        </core:SfBusyIndicator>
+        <VerticalStackLayout Grid.Row="0" >
+            <Image Source="un2treknegro.png"                
+               VerticalOptions="Start"></Image>
+            <VerticalStackLayout IsVisible="{Binding IsRegistered, Converter={StaticResource InvertedBoolConverter}}">
+                <Frame Margin="10"
+                   VerticalOptions="CenterAndExpand"
+                   HeightRequest="340"                     
+                   Padding="10"
+                   BackgroundColor="{StaticResource Primary}">
+                    <VerticalStackLayout >
+                        <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry  Placeholder="Correo electrónico"                                                                          
+                                Text ="{Binding Email.Value}">
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+                                     Binding="{Binding Email.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                        <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <core:SfTextInputLayout.LeadingView>
+                                <Label  Style="{StaticResource DefaultLeadingIcon}"
+                                    Text="{x:Static helpers:MaterialDesignIconFonts.Email}">
+                                </Label>
+                            </core:SfTextInputLayout.LeadingView>
+                        </core:SfTextInputLayout>
+                        <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry  Placeholder="Nombre"                                                                          
+                                Text ="{Binding Name.Value}">
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+                                     Binding="{Binding Name.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                        <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <core:SfTextInputLayout.LeadingView>
+                                <Label  Style="{StaticResource DefaultLeadingIcon}"
+                                    Text="{x:Static helpers:MaterialDesignIconFonts.Account}">
+                                </Label>
+                            </core:SfTextInputLayout.LeadingView>
+                        </core:SfTextInputLayout>
+                        <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry  Placeholder="Primer apellido"                                                                          
+                                Text ="{Binding LastName.Value}">
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+                                     Binding="{Binding LastName.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                        <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <core:SfTextInputLayout.LeadingView>
+                                <Label  Style="{StaticResource DefaultLeadingIcon}"
+                                    Text="{x:Static helpers:MaterialDesignIconFonts.Account}">
+                                </Label>
+                            </core:SfTextInputLayout.LeadingView>
+                        </core:SfTextInputLayout>
+                        <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                            <Entry 
+                                IsPassword="True"
+                                Text ="{Binding Password.Value}"
+                                Placeholder="Contraseña">
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+                                     Binding="{Binding UserPassword.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                        <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <core:SfTextInputLayout.LeadingView>
+                                <Label  Style="{StaticResource DefaultLeadingIcon}"
+                            Text="{x:Static helpers:MaterialDesignIconFonts.Key}">
+                                </Label>
+                            </core:SfTextInputLayout.LeadingView>
+                        </core:SfTextInputLayout>
+                    </VerticalStackLayout>
+                </Frame>
+                <customControls:ButtonIconText
+                            Margin="10"
+                            HeightRequest="50"                            
+                            HorizontalOptions="End"
+                            Text="Registrarse"
+                            CustomCommand="{Binding RegisterCommand}"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.AccountPlus}">
+                </customControls:ButtonIconText>
+            </VerticalStackLayout>
+            <VerticalStackLayout IsVisible="{Binding IsRegistered}" 
+                                 Margin="15">
+                <Label Text="Se ha completado el registro correctamente. Pulse sobre el botón para volver a la pantalla de login y poder acceder a la aplicación"></Label>
+                <customControls:ButtonIconText
+                            Margin="10"
+                            HeightRequest="50"                            
+                            HorizontalOptions="End"
+                            Text="Ir al login"
+                            CustomCommand="{Binding BackToLoginCommand}"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.KeyboardBackspace}">
+                </customControls:ButtonIconText>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

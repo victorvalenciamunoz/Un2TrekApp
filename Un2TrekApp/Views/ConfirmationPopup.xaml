@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui" 
+             xmlns:customControls="clr-namespace:Un2TrekApp.Controls"
+             xmlns:helpers="clr-namespace:Un2TrekApp.Helpers"
+             x:Class="Un2TrekApp.Views.ConfirmationPopup">
+    <VerticalStackLayout>
+        <Label x:Name="labelMessage"
+            FontSize="20"
+            Margin="10,20,10,10" 
+            HeightRequest="100"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <customControls:ButtonIconText
+                            HeightRequest="50" Grid.Column="0"
+                            HorizontalOptions="Start"
+                            ButtonIconTextClicked="ButtonIconText_CancelClicked"
+                            Text="Cancelar"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.Cancel}">
+            </customControls:ButtonIconText>
+
+            <customControls:ButtonIconText
+                            HeightRequest="50" Grid.Column="1"
+                            HorizontalOptions="End"
+                            ButtonIconTextClicked="ButtonIconText_AcceptClicked"
+                            Text="Aceptar"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.Check}">
+            </customControls:ButtonIconText>
+        </Grid>
+    </VerticalStackLayout>
+</mct:Popup>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:Un2TrekApp.Controls"
+             xmlns:helpers="clr-namespace:Un2TrekApp.Helpers"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+			 xmlns:vm="clr-namespace:Un2TrekApp.ViewModels"
+			 x:Class="Un2TrekApp.Views.AuthPage"
+			 x:DataType="vm:AuthViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame Grid.Row="0" Grid.RowSpan="2"
+               BorderColor="White"
+               IsVisible="{Binding IsBusy}"
+                BackgroundColor="White" ZIndex="10">
+            <skia:SKLottieView                
+                Source="trekking.json"
+                IsVisible="true"
+                RepeatCount="-1"                
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand">
+            </skia:SKLottieView>
+        </Frame>
+        <VerticalStackLayout Grid.Row="0" >
+            <Image Source="un2treknegro.png"                
+               VerticalOptions="Start"></Image>
+            <Frame Margin="10"
+                   VerticalOptions="CenterAndExpand"
+                   HeightRequest="160"                     
+                   Padding="10"
+                   BackgroundColor="{StaticResource Primary}">
+                <VerticalStackLayout >
+                    <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                        <Entry  Placeholder="Nombre de usuario"                                                                          
+                                Text ="{Binding UserName.Value}">
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry"
+                                     Binding="{Binding UserName.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                    <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label  Style="{StaticResource DefaultLeadingIcon}"
+                                    Text="{x:Static helpers:MaterialDesignIconFonts.Account}">
+                            </Label>
+                        </core:SfTextInputLayout.LeadingView>
+                    </core:SfTextInputLayout>
+                    <core:SfTextInputLayout                          
+                        Style="{StaticResource DefaultTextInputLayout}">
+                        <Entry 
+                            IsPassword="True"
+                            Text ="{Binding UserPassword.Value}"
+                            Placeholder="Contraseña">
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry"
+                                     Binding="{Binding UserPassword.Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                     Value="True">
+                                    <Setter Property="Style" Value="{StaticResource InvalidEntryStyle}"></Setter>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label  Style="{StaticResource DefaultLeadingIcon}"
+                            Text="{x:Static helpers:MaterialDesignIconFonts.Key}">
+                            </Label>
+                        </core:SfTextInputLayout.LeadingView>
+                    </core:SfTextInputLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <customControls:ButtonIconText
+                            Margin="10"
+                            HeightRequest="50"                            
+                            HorizontalOptions="End"
+                            Text="Acceso"
+                            CustomCommand="{Binding DoLoginCommand}"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.DoorOpen}">
+            </customControls:ButtonIconText>
+            <customControls:ButtonIconText                            
+                            IsVisible="{Binding IsBiometricAccessAllowed}"
+                            Margin="10"
+                            HeightRequest="50"                 
+                            WidthRequest="250"                            
+                            HorizontalOptions="CenterAndExpand"
+                            Text="Acceso con biometría"
+                            CustomCommand="{Binding OpenFingerprintCommand}"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.Fingerprint}">
+            </customControls:ButtonIconText>
+            <customControls:ButtonIconText Margin="15" 
+                                           IsVisible="{Binding NotIsBusy}"
+                                           HeightRequest="50" Text="Si no tiene cuenta, regístrese aquí"
+                                           CustomCommand="{Binding RegisterCommand}"
+                                           Icon="{x:Static helpers:MaterialDesignIconFonts.AccountPlus}">
+
+            </customControls:ButtonIconText>
+        </VerticalStackLayout>        
+    </Grid>
+</ContentPage>

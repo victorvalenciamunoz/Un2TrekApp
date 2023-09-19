@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="Un2TrekApp.AppShell"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:views="clr-namespace:Un2TrekApp.Views"
+    xmlns:converters="clr-namespace:Un2TrekApp.Converters"
+    xmlns:helpers="clr-namespace:Un2TrekApp.Helpers"
+	xmlns:local="clr-namespace:Un2TrekApp"
+    xmlns:customControls="clr-namespace:Un2TrekApp.Controls"
+    Shell.TabBarIsVisible="False">
+    <Shell.Resources>
+        <ResourceDictionary>
+            <converters:FlyoutItemTitleToIconConverter x:Key="FlyoutItemTitleToIconConverter" />
+            <converters:FlyoutItemTitleToVisibleConverter x:Key="FlyoutItemTitleToVisibleConverter"/>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="60,*" IsVisible="{Binding Title,Converter={StaticResource FlyoutItemTitleToVisibleConverter}}">
+                <Image Grid.Column="0" WidthRequest="45" 
+                       VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                       Source="puntoverde.png" ></Image>
+                <Image Grid.Column="0" WidthRequest="25" Source="{Binding Title,Converter={StaticResource FlyoutItemTitleToIconConverter} }"></Image>
+                <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center"></Label>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <ShellContent
+		Shell.NavBarIsVisible="false"	
+        IsVisible="True"
+        Title="Login"
+		ContentTemplate="{DataTemplate views:AuthPage}"
+		Route="AuthPage" />
+    <Shell.FlyoutFooter>
+        <HorizontalStackLayout>
+            <StackLayout Padding="20">
+                <customControls:ButtonIconText
+                            HeightRequest="50" 
+                            HorizontalOptions="Start"                            
+                            ButtonIconTextClicked="ButtonIconText_ExitClicked"
+                            Text="Cerrar sesión"
+                            Icon="{x:Static helpers:MaterialDesignIconFonts.ExitToApp}">
+                </customControls:ButtonIconText>
+                <HorizontalStackLayout Grid.Row="2" HorizontalOptions="StartAndExpand">
+                    <Label x:Name="lblVersion" Text="" FontSize="9"></Label>
+                    <Label Text="." FontSize="8"></Label>
+                    <Label x:Name="lblBuild" Text="" FontSize="9"></Label>
+                </HorizontalStackLayout>
+            </StackLayout>
+        </HorizontalStackLayout>
+    </Shell.FlyoutFooter>
+</Shell>

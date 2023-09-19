@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Un2TrekApp.Views.NoLocationPermissionView"
+             Title="NoLocationPermissionView">
+    <StackLayout  BackgroundColor="White">
+        <Image Margin="20" Source="location_off.xml" HeightRequest="200" WidthRequest="200"></Image>
+        <Label Margin="20" FontSize="18" Text="No se ha concedido permiso para conocer su ubicación. La aplicación necesita conocer su ubicación para mostrar información. Revise los permisos"></Label>
+        <ImageButton Padding="10"
+                         Margin="20"                         
+                         BackgroundColor="{StaticResource Primary}"
+                         Command="{Binding CloseAppCommand}"
+                         Source="logout.xml">
+        </ImageButton>
+    </StackLayout>
+</ContentPage>

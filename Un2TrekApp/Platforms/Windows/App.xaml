@@ -1,0 +1,8 @@
+﻿<maui:MauiWinUIApplication
+	x:Class="Un2TrekApp.WinUI.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:maui="using:Microsoft.Maui"
+	xmlns:local="using:Un2TrekApp.WinUI">
+
+</maui:MauiWinUIApplication>

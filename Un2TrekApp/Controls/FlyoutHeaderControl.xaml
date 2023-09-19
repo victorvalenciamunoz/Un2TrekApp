@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             x:Class="Un2TrekApp.Controls.FlyoutHeaderControl">
+    <StackLayout Margin="10">
+        <Image Source="un2treknegro.png" HeightRequest="60" WidthRequest="60"
+               VerticalOptions="Start"></Image>
+        <Label x:Name="userName" Text="No identificado" TextColor="{StaticResource White}"></Label>
+
+    </StackLayout>
+</StackLayout>

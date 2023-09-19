@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Un2TrekApp.Views.ActivityListPage"
+             xmlns:vm="clr-namespace:Un2TrekApp.ViewModels"
+             xmlns:m="clr-namespace:Un2TrekApp.Models"
+             x:DataType="vm:ActivityListViewModel">
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding ActivityList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:Actividad">
+                    <Frame Margin="4" Padding="12">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ActivityListViewModel}}, Path=GoToMapCommand}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding Titulo}" FontSize="Large" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
+                            <Label Text="{Binding Descripcion}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}"/>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
